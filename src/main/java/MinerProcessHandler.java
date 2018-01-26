@@ -1,20 +1,32 @@
+import lombok.Getter;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public class MinerProcessHandler {
 
     private ProcessBuilder builder;
+    private String pathToMiner;
     private Process process;
 
-    public MinerProcessHandler(String pathToMiner, String... arguments) {
+    public MinerProcessHandler(String pathToMiner) {
+        this.pathToMiner = pathToMiner;
+    }
+
+    public void start(String... arguments) throws IOException {
         List<String> commands = Arrays.asList(arguments);
         commands.add(0, pathToMiner);
+        process = builder.start();
         builder = new ProcessBuilder(commands);
     }
 
-    public void start() throws IOException {
-        process = builder.start();
+    public void restart(String... arguments) throws IOException, InterruptedException {
+        Process oldProcess = this.process;
+        start(arguments);
+        Thread.sleep(5000);
+        oldProcess.destroy();
     }
 
     private boolean stop() {
