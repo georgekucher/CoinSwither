@@ -10,7 +10,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Coin {
-
     private int id;
     private String tag;
     private String algorithm;
@@ -34,11 +33,4 @@ public class Coin {
     private int profitability24;
     private boolean lagging;
     private long timestamp;
-
-    public String getTag() {
-        return tag;
-    }
 }
-
-
-
